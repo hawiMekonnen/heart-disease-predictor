@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart Disease Predictor</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #f9f9f9);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 20px;
+      font-size: 2.2em;
+    }
+    form {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+    form:hover {
+      transform: translateY(-3px);
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: 600;
+      color: #333;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: border-color 0.2s ease;
+    }
+    input:focus, select:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #0056b3, #004494);
+      transform: scale(1.02);
+    }
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #e7f3ff;
+      border-left: 6px solid #007bff;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 20px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .note {
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+      margin-top: 25px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🫀 Heart Disease Predictor</h1>
+    <form method="post" action="/predict">
+      <label>Age (years)</label>
+      <input type="number" name="age" required>
+
+      <label>Resting Blood Pressure (mmHg)</label>
+      <input type="number" name="trestbps" required>
+
+      <label>Cholesterol Level (mg/dl)</label>
+      <input type="number" name="chol" required>
+
+      <label>Maximum Heart Rate During Exercise</label>
+      <input type="number" name="thalach" required>
+
+      <label>Exercise‑related ST Depression</label>
+      <input type="number" step="0.1" name="oldpeak" required>
+
+      <label>Sex (1 = Male, 0 = Female)</label>
+      <input type="number" min="0" max="1" name="sex" required>
+
+      <label>Chest Pain Type (0–3)</label>
+      <input type="number" min="0" max="3" name="cp" required>
+
+      <label>High Fasting Blood Sugar (>120 mg/dl)</label>
+      <input type="number" min="0" max="1" name="fbs" required>
+
+      <label>Resting ECG Results (0–2)</label>
+      <input type="number" min="0" max="2" name="restecg" required>
+
+      <label>Exercise‑Induced Chest Pain</label>
+      <input type="number" min="0" max="1" name="exang" required>
+
+      <label>Slope of ST Segment During Exercise (0–2)</label>
+      <input type="number" min="0" max="2" name="slope" required>
+
+      <label>Number of Major Vessels Seen in X‑ray (0–4)</label>
+      <input type="number" min="0" max="4" name="ca" required>
+
+      <label>Thalassemia Test Result (0–3)</label>
+      <input type="number" min="0" max="3" name="thal" required>
+
+      <label>Choose Prediction Model</label>
+      <select name="model">
+        <option value="logistic">Logistic Regression</option>
+        <option value="decision_tree">Decision Tree</option>
+      </select>
+
+      <button type="submit">Predict Heart Disease Risk</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+      <strong>Prediction using {{ model_used }}:</strong><br>
+      {{ prediction }}
+    </div>
+    {% endif %}
+
+    <p class="note">This app provides sample predictions only.<br>
+    Please consult a healthcare professional for real health concerns.</p>
+  </div>
+</body>
+</html>
